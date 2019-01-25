@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: grey;
+        }
+
+        .content {
+            border: 2px solid black;
+            height: 100px;
+            width: 600px;
+            border-radius: 10px;
+        }
+
+        .text {
+            height: 71px;
+            padding: 5px;
+        }
+        
+        .profession {
+            float: left;
+            width: 65px;
+            padding: 3px;
+        }
+        
+        .prof-img {
+            height: 25px;
+            margin-left: 15px;
+        }
+        
+        .prof-lvl {
+            text-align: center;
+            font-size: 12px;
+            line-height: 12px;
+            font-family: 'Retro Computer';
+        }
+
+        #plr-name {
+            font-size: 20px;
+            font-family: 'Press Start 2P';
+            margin-left: 5px;
+            padding-bottom: 2px;
+            border-bottom: 2px solid black;
+        }
+        
+        #plr-xp {
+            font-size: 14px;
+            padding-left: 5px;
+            font-family: 'Retro Computer';
+        }
+        
+        #plr-img {
+            height: 90px;
+            border-radius: 10px;
+            padding: 5px;
+            float: left;
+        }
+        
+        #plr-server {
+            float: right;
+            font-family: '8BIT WONDER Nominal';
+            margin-right: 5px;
+        }
+
+    </style>
+    <script>
+        var PlayerName = "Salted";
+
+        var wynnUrl = "https://api.wynncraft.com/public_api.php?action=playerStats&command=" + PlayerName;
+
+        function Get(wynnUrl) {
+            var Httpreq = new XMLHttpRequest(); // a new request
+            Httpreq.open("GET", wynnUrl, false);
+            Httpreq.send(null);
+            return Httpreq.responseText;
+        }
+        var wynn = JSON.parse(Get(wynnUrl))
+
+        /* SELECT CLASS */
+        var PlayerClass = wynn.classes.mage;
+        /* REWRITE "mage" TO ANY CLASS IN API */
+
+        if (wynn.error == "Player not found") {
+            console.log("Ehm.. That player doesn't exist.. Try another one")
+        } else {
+            console.log("Currently displaying: [" + wynn.rank + "] " + wynn.username + " - Selected class is Level " + PlayerClass.level);
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="content">
+        <img id="plr-img">
+        <div class="text">
+            <span id="plr-name">--insert player name here--</span>
+            <span id="plr-server">[...]</span><br>
+            <span id="plr-xp">--insert player's xp here--</span><br>
+            <div id="professions">
+                <div class="profession">
+                   <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/b/b3/Wooden_Pickaxe.png?version=0530024f1bb35ab03dd9ddc22b43f116" class="prof-img">
+                   <span id="plr-minelvl" class="prof-lvl">Lv.1</span>
+                </div>
+                <div class="profession">
+                   <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/1/11/Wooden_Axe.png?version=be89fb8d28e7e187fc1571ad3b8e69c0" class="prof-img">
+                    <span id="plr-woodlvl" class="prof-lvl">Lv.1</span>
+                </div>
+                <div class="profession">
+                   <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/b/b7/Wooden_Hoe.png?version=84cb5c5a150ff523f8e5f0561deb262f" class="prof-img">
+                    <span id="plr-farmlvl" class="prof-lvl">Lv.1</span>
+                </div>
+                <div class="profession">
+                   <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/c/c7/Fishing_Rod.png?version=62640b5ea545c7646aa856dedfed9b79" class="prof-img">
+                    <span id="plr-fishlvl" class="prof-lvl">Lv.1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("plr-name").innerHTML = wynn.username;
+        document.getElementById("plr-img").src = "https://crafatar.com/avatars/" + wynn.uuid;
+        document.getElementById("plr-xp").innerHTML = "> Mage Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+
+        /* CURRENT SERVER STATUS */
+        if (wynn.current_server = "null") {
+            document.getElementById("plr-server").innerHTML = "(OFFLINE)";
+        } else {
+            document.getElementById("plr-server").innerHTML = "[ " + wynn.current_server + " ]";
+        }
+        /* END CURRENT SERVER STATUS */
+
+        /* GRINDING PROFESSIONS */
+        var mineLvl = "1";
+        var woodLvl = "1";
+        var farmLvl = "1";
+        var fishLvl = "1";
+
+        if (PlayerClass.skills.Mining > mineLvl) {
+            mineLvl = PlayerClass.skills.Mining
+        }
+
+        if (PlayerClass.skills.Woodcutting > woodLvl) {
+            woodLvl = PlayerClass.skills.Woodcutting
+        }
+
+        if (PlayerClass.skills.Farming > farmLvl) {
+            farmLvl = PlayerClass.skills.Farming
+        }
+
+        if (PlayerClass.skills.Fishing > fishLvl) {
+            fishLvl = PlayerClass.skills.Fishing
+        }
+
+        document.getElementById("plr-minelvl").innerHTML = "Lvl." + mineLvl;
+        document.getElementById("plr-woodlvl").innerHTML = "Lvl." + woodLvl;
+        document.getElementById("plr-farmlvl").innerHTML = "Lvl." + farmLvl;
+        document.getElementById("plr-fishlvl").innerHTML = "Lvl." + fishLvl;
+        /* END GRINDING PROFESSIONS */
+
+    </script>
+</body>
+
+</html>
