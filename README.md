@@ -1,9 +1,12 @@
 # Profile Card for Wynncraft
 **WARNING**: If you use this, then please be noted, that it's just a test of mine.
 
-**Required fonts** are **Press Start 2P** (Available in Google Fonts API) and **Retro Computer** by *Petyka* (Available in DaFont's library - Free for Personal Use)
+**Used APIs**:
+-*Wynncraft's Official API* (Of course) 
+-*Crafatar* (Used for player avatars)
 
-If you want to see your stats, then just edit this line on 88th row (If it's not on that row, use Ctrl+F and search it)
+
+If you want to see your stats, then just edit this line on 88th row by replacing **"MartinNemi03";** with **"{your_name_here}";** and of course, in *"{your_name_here}"*, you *write down your name*. (If it's not on that row, use Ctrl+F and search it)
 ```
 var PlayerName = "MartinNemi03";
 ``` 

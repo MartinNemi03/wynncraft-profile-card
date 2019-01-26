@@ -2,6 +2,7 @@
 <html>
 
 <head>
+   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Source+Code+Pro|VT323" rel="stylesheet">
     <style>
         .content {
             border: 2px solid #50352d;
@@ -35,9 +36,9 @@
 
         .prof-lvl {
             text-align: center;
-            font-size: 12px;
+            font-size: 10px;
             line-height: 12px;
-            font-family: 'Retro Computer';
+            font-family: 'Press Start 2P';
         }
 
         #plr-name {
@@ -63,7 +64,8 @@
         #plr-xp {
             font-size: 14px;
             padding-left: 5px;
-            font-family: 'Retro Computer';
+            font-family: 'Source Code Pro';
+            font-weight: bold;
         }
 
         #plr-img {
@@ -76,14 +78,20 @@
 
         #plr-server {
             float: right;
-            font-family: '8BIT WONDER Nominal';
+            font-family: 'VT323';
             margin-right: 5px;
+            font-size: 18px;
         }
 
 
     </style>
     <script>
-        var PlayerName = "MartinNemi03";
+
+        /* INSERT YOUR NAME HERE */
+
+        var PlayerName = "olinus10";
+
+        /* END INSERT YOUR NAME HERE */
 
         var wynnUrl = "https://api.wynncraft.com/public_api.php?action=playerStats&command=" + PlayerName;
 
@@ -95,12 +103,12 @@
         }
         var wynn = JSON.parse(Get(wynnUrl));
 
-        var PlayerClass = wynn.classes[Object.keys(wynn.classes)[0]];
+        var wynnClass = wynn.classes[Object.keys(wynn.classes)[0]];
 
         if (wynn.error == "Player not found") {
             console.log("Ehm.. That player doesn't exist.. Try another one")
         } else {
-            console.log("Currently displaying: [" + wynn.rank + "] " + wynn.username + " - Selected class is Level " + PlayerClass.level);
+            console.log("Currently displaying: [" + wynn.rank + "] " + wynn.username + " - Selected class is Level " + wynnClass.level);
         }
 
     </script>
@@ -169,45 +177,45 @@
         var className = Object.keys(wynn.classes)[0];
 
         if (className == "assassin" || className == "assassin1") {
-            document.getElementById("plr-xp").innerHTML = "> Assassin Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+            document.getElementById("plr-xp").innerHTML = "> Assassin Lv." + wynnClass.level + " [" + wynnClass.xp + "%]";
         } else
 
         if (className == "mage" || className == "mage1") {
-            document.getElementById("plr-xp").innerHTML = "> Mage Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+            document.getElementById("plr-xp").innerHTML = "> Mage Lv." + wynnClass.level + " [" + wynnClass.xp + "%]";
         } else
 
         if (className == "warrior" || className == "warrior1") {
-            document.getElementById("plr-xp").innerHTML = "> Warrior Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+            document.getElementById("plr-xp").innerHTML = "> Warrior Lv." + wynnClass.level + " [" + wynnClass.xp + "%]";
         } else
 
         if (className == "archer" || className == "archer1") {
-            document.getElementById("plr-xp").innerHTML = "> Archer Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+            document.getElementById("plr-xp").innerHTML = "> Archer Lv." + wynnClass.level + " [" + wynnClass.xp + "%]";
         } else
 
         if (className == "ninja" || className == "ninja1") {
-            document.getElementById("plr-xp").innerHTML = "> Ninja Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+            document.getElementById("plr-xp").innerHTML = "> Ninja Lv." + wynnClass.level + " [" + wynnClass.xp + "%]";
         } else
 
         if (className == "darkwizard" || className == "darkwizard1") {
-            document.getElementById("plr-xp").innerHTML = "> Dark Wizard Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+            document.getElementById("plr-xp").innerHTML = "> Dark Wizard Lv." + wynnClass.level + " [" + wynnClass.xp + "%]";
         } else
 
         if (className == "knight" || className == "knight1") {
-            document.getElementById("plr-xp").innerHTML = "> Knight Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+            document.getElementById("plr-xp").innerHTML = "> Knight Lv." + wynnClass.level + " [" + wynnClass.xp + "%]";
         } else
 
         if (className == "hunter" || className == "hunter1") {
-            document.getElementById("plr-xp").innerHTML = "> Hunter Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+            document.getElementById("plr-xp").innerHTML = "> Hunter Lv." + wynnClass.level + " [" + wynnClass.xp + "%]";
         } else {
             document.getElementById("plr-xp").innerHTML = "> Class not found!";
         }
         /* END CLASS, LEVEL & XP */
 
         /* CURRENT SERVER STATUS */
-        if (wynn.current_server = "null") {
+        if (wynn.current_server == "null") {
             document.getElementById("plr-server").innerHTML = "(OFFLINE)";
         } else {
-            document.getElementById("plr-server").innerHTML = "[ " + wynn.current_server + " ]";
+            document.getElementById("plr-server").innerHTML = "[ONLINE: " + wynn.current_server + "]";
         }
         /* END CURRENT SERVER STATUS */
 
@@ -217,26 +225,26 @@
         var farmLvl = "1";
         var fishLvl = "1";
 
-        if (PlayerClass.skills.Mining > mineLvl) {
-            mineLvl = PlayerClass.skills.Mining
+        if (wynnClass.skills.Mining > mineLvl) {
+            mineLvl = wynnClass.skills.Mining
         }
 
-        if (PlayerClass.skills.Woodcutting > woodLvl) {
-            woodLvl = PlayerClass.skills.Woodcutting
+        if (wynnClass.skills.Woodcutting > woodLvl) {
+            woodLvl = wynnClass.skills.Woodcutting
         }
 
-        if (PlayerClass.skills.Farming > farmLvl) {
-            farmLvl = PlayerClass.skills.Farming
+        if (wynnClass.skills.Farming > farmLvl) {
+            farmLvl = wynnClass.skills.Farming
         }
 
-        if (PlayerClass.skills.Fishing > fishLvl) {
-            fishLvl = PlayerClass.skills.Fishing
+        if (wynnClass.skills.Fishing > fishLvl) {
+            fishLvl = wynnClass.skills.Fishing
         }
 
-        document.getElementById("plr-minelvl").innerHTML = "Lvl." + mineLvl;
-        document.getElementById("plr-woodlvl").innerHTML = "Lvl." + woodLvl;
-        document.getElementById("plr-farmlvl").innerHTML = "Lvl." + farmLvl;
-        document.getElementById("plr-fishlvl").innerHTML = "Lvl." + fishLvl;
+        document.getElementById("plr-minelvl").innerHTML = "Lv." + mineLvl;
+        document.getElementById("plr-woodlvl").innerHTML = "Lv." + woodLvl;
+        document.getElementById("plr-farmlvl").innerHTML = "Lv." + farmLvl;
+        document.getElementById("plr-fishlvl").innerHTML = "Lv." + fishLvl;
         /* END GRINDING PROFESSIONS */
 
     </script>
