@@ -3,33 +3,36 @@
 
 <head>
     <style>
-        body {
-            background-color: grey;
-        }
-
         .content {
-            border: 2px solid black;
+            border: 2px solid #50352d;
+            outline: 2px solid black;
             height: 100px;
             width: 600px;
-            border-radius: 10px;
+            background-color: #D8BC86;
         }
 
         .text {
             height: 71px;
-            padding: 5px;
+            padding: 4px;
         }
-        
+
+        .image {
+            height: 100px;
+            width: 100px;
+        }
+
         .profession {
             float: left;
             width: 65px;
+            height: 40px;
             padding: 3px;
         }
-        
+
         .prof-img {
             height: 25px;
             margin-left: 15px;
         }
-        
+
         .prof-lvl {
             text-align: center;
             font-size: 12px;
@@ -41,32 +44,46 @@
             font-size: 20px;
             font-family: 'Press Start 2P';
             margin-left: 5px;
-            padding-bottom: 2px;
+            padding: 3px;
             border-bottom: 2px solid black;
+            text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
         }
-        
+
+        #plr-tag {
+            font-family: 'Press Start 2P';
+            font-size: 12px;
+            position: fixed;
+            margin-left: -89px;
+            margin-top: 85px;
+            width: 95px;
+            text-align: center;
+            border: 1px solid red;
+        }
+
         #plr-xp {
             font-size: 14px;
             padding-left: 5px;
             font-family: 'Retro Computer';
         }
-        
+
         #plr-img {
-            height: 90px;
+            height: 85px;
             border-radius: 10px;
-            padding: 5px;
+            margin: 5px;
             float: left;
+            border: 3px solid black;
         }
-        
+
         #plr-server {
             float: right;
             font-family: '8BIT WONDER Nominal';
             margin-right: 5px;
         }
 
+
     </style>
     <script>
-        var PlayerName = "Salted";
+        var PlayerName = "MartinNemi03";
 
         var wynnUrl = "https://api.wynncraft.com/public_api.php?action=playerStats&command=" + PlayerName;
 
@@ -76,11 +93,9 @@
             Httpreq.send(null);
             return Httpreq.responseText;
         }
-        var wynn = JSON.parse(Get(wynnUrl))
+        var wynn = JSON.parse(Get(wynnUrl));
 
-        /* SELECT CLASS */
-        var PlayerClass = wynn.classes.mage;
-        /* REWRITE "mage" TO ANY CLASS IN API */
+        var PlayerClass = wynn.classes[Object.keys(wynn.classes)[0]];
 
         if (wynn.error == "Player not found") {
             console.log("Ehm.. That player doesn't exist.. Try another one")
@@ -95,24 +110,24 @@
     <div class="content">
         <img id="plr-img">
         <div class="text">
-            <span id="plr-name">--insert player name here--</span>
+            <span id="plr-name">Loading...</span>
             <span id="plr-server">[...]</span><br>
-            <span id="plr-xp">--insert player's xp here--</span><br>
+            <span id="plr-xp">> Loading.. Lv.404 [-1%]</span><br>
             <div id="professions">
                 <div class="profession">
-                   <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/b/b3/Wooden_Pickaxe.png?version=0530024f1bb35ab03dd9ddc22b43f116" class="prof-img">
-                   <span id="plr-minelvl" class="prof-lvl">Lv.1</span>
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/b/b3/Wooden_Pickaxe.png?version=0530024f1bb35ab03dd9ddc22b43f116" class="prof-img">
+                    <span id="plr-minelvl" class="prof-lvl">Lv.1</span>
                 </div>
                 <div class="profession">
-                   <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/1/11/Wooden_Axe.png?version=be89fb8d28e7e187fc1571ad3b8e69c0" class="prof-img">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/1/11/Wooden_Axe.png?version=be89fb8d28e7e187fc1571ad3b8e69c0" class="prof-img">
                     <span id="plr-woodlvl" class="prof-lvl">Lv.1</span>
                 </div>
                 <div class="profession">
-                   <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/b/b7/Wooden_Hoe.png?version=84cb5c5a150ff523f8e5f0561deb262f" class="prof-img">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/b/b7/Wooden_Hoe.png?version=84cb5c5a150ff523f8e5f0561deb262f" class="prof-img">
                     <span id="plr-farmlvl" class="prof-lvl">Lv.1</span>
                 </div>
                 <div class="profession">
-                   <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/c/c7/Fishing_Rod.png?version=62640b5ea545c7646aa856dedfed9b79" class="prof-img">
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/c/c7/Fishing_Rod.png?version=62640b5ea545c7646aa856dedfed9b79" class="prof-img">
                     <span id="plr-fishlvl" class="prof-lvl">Lv.1</span>
                 </div>
             </div>
@@ -121,8 +136,72 @@
 
     <script>
         document.getElementById("plr-name").innerHTML = wynn.username;
-        document.getElementById("plr-img").src = "https://crafatar.com/avatars/" + wynn.uuid;
-        document.getElementById("plr-xp").innerHTML = "> Mage Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+
+        /* RANK COLOR & TAG */
+        if (wynn.rank == "Player") {
+            if (wynn.tag == "VIP") {
+                document.getElementById("plr-img").style.border = '3px solid #00AA00';
+            } else
+            if (wynn.tag == "VIP+") {
+                document.getElementById("plr-img").style.border = '3px solid #55FFFF';
+            } else
+            if (wynn.tag == "HERO") {
+                document.getElementById("plr-img").style.border = '3px solid #AA00AA';
+            }
+        }
+        if (wynn.rank == "Media") {
+            document.getElementById("plr-img").style.border = '3px solid #FF55FF';
+        }
+        if (wynn.rank == "Hybrid" || wynn.rank == "Game Master" || wynn.rank == "CMD" || wynn.rank == "Builder") {
+            document.getElementById("plr-img").style.border = '3px solid #00AAAA';
+        }
+        if (wynn.rank == "Moderator") {
+            document.getElementById("plr-img").style.border = '4px solid #FFAA00';
+        }
+        if (wynn.rank == "Administrator") {
+            document.getElementById("plr-img").style.border = '4px ridge #AA0000';
+        }
+        /* END RANK COLOR & TAG */
+
+        document.getElementById("plr-img").src = "https://crafatar.com/avatars/" + wynn.uuid + "?overlay";
+
+        /* CLASS, LEVEL & XP */
+        var className = Object.keys(wynn.classes)[0];
+
+        if (className == "assassin" || className == "assassin1") {
+            document.getElementById("plr-xp").innerHTML = "> Assassin Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+        } else
+
+        if (className == "mage" || className == "mage1") {
+            document.getElementById("plr-xp").innerHTML = "> Mage Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+        } else
+
+        if (className == "warrior" || className == "warrior1") {
+            document.getElementById("plr-xp").innerHTML = "> Warrior Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+        } else
+
+        if (className == "archer" || className == "archer1") {
+            document.getElementById("plr-xp").innerHTML = "> Archer Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+        } else
+
+        if (className == "ninja" || className == "ninja1") {
+            document.getElementById("plr-xp").innerHTML = "> Ninja Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+        } else
+
+        if (className == "darkwizard" || className == "darkwizard1") {
+            document.getElementById("plr-xp").innerHTML = "> Dark Wizard Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+        } else
+
+        if (className == "knight" || className == "knight1") {
+            document.getElementById("plr-xp").innerHTML = "> Knight Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+        } else
+
+        if (className == "hunter" || className == "hunter1") {
+            document.getElementById("plr-xp").innerHTML = "> Hunter Lv." + PlayerClass.level + " [" + PlayerClass.xp + "%]";
+        } else {
+            document.getElementById("plr-xp").innerHTML = "> Class not found!";
+        }
+        /* END CLASS, LEVEL & XP */
 
         /* CURRENT SERVER STATUS */
         if (wynn.current_server = "null") {
